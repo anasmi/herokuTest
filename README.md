@@ -1,21 +1,81 @@
 # Project Base for Vaadin and Spring Boot
 
-This project can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+This simple project is used to verify how deplyment of Vaadin application works with Heroku. 
+Since spring-boot application is packaged by default as a jar, there are three different deployment possibilites:
 
-The best way to create your own project based on this starter is [start.vaadin.com](https://start.vaadin.com/) - you can get only the necessary parts and choose the package naming you want to use.
+- Deploy a pre-build in production mode jar
+- Deploy a pre-build in production mode war
+- Associate a github repo with an app on Heroku service
 
-## Running the Application
+All three are possible with vaadin.
 
-Import the project to the IDE of your choosing as a Maven project.
+## Running a jar
 
-Run the application using `mvn spring-boot:run` or by running the `Application` class directly from your IDE.
+1. Create a Heroku account at https://www.heroku.com/home
 
-Open http://localhost:8080/ in your browser.
+2. Check that git is installed and if not, install git
 
-If you want to run the application locally in the production mode, run `mvn spring-boot:run -Pproduction`.
+3. Install Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli)
 
-To run Integration Tests, execute `mvn verify -Pintegration-tests`.
+4. Install Java CLI plugin (heroku plugins:install java)
+
+5. Change the server.port in application.properties settings to `server.port=${port:8080}` (https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-change-the-location-of-external-properties)
+
+6. Generate a jar from your application using package -Pproduction
+
+7. Navigate to the folder, where generated jar is
+
+    <i>Next steps are following the section here: [Using the Heroku Java CLI Plugin](https://devcenter.heroku.com/articles/deploying-executable-jar-files#using-the-heroku-java-cli-plugin)</i>
+
+8. Create a Heroku application by either running
+      - `heroku create --no-remote` in the CLI`
+      - Or in the UI under https://dashboard.heroku.com/apps “New”
+      
+9. Write down the name of the application. You will need it in the next step
+ 
+10. Deploy the jar using: heroku deploy:jar my-app.jar --app APP_NAME
+11. Run heroku open --app APP_NAME or check the URL of deployed app under Domains: https://dashboard.heroku.com/apps/APP_NAME/settings
+
+## Running from Github
+
+- Add a [Frontend maven plugin](https://github.com/eirslett/frontend-maven-plugin) as a profile :
+```
+ <profile>
+          <id>npm</id>
+           <build>
+               <plugins>
+                 <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <!-- Use the latest released version:
+                    https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+                    <version>1.9.1</version>
+                    <executions>
+                        <execution>
+                            <!-- optional: you don't really need execution ids, but it looks nice in your build log. -->
+                            <id>install node and npm</id>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                            <!-- optional: default phase is "generate-resources" -->
+                            <phase>generate-resources</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <nodeVersion>v12.13.0</nodeVersion>
+                    </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+```
+
+- Configure Procfile in the root directory
+- Create `heroku-settings.xml` (then need to add a `MAVEN_SETTINGS_PATH` with the file name to the Config var in Settings section on Heroku)
+- configure using two profiles (`production` and `npm` in this example) by default on application build
+- Associate the Github repo with the Heroku application
+- It should work after that
 
 ## More Information
 
