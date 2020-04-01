@@ -1,0 +1,1 @@
+web: java -jar target/starter_app-2.0-SNAPSHOT.jar $PORT
