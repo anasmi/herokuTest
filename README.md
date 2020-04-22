@@ -1,4 +1,4 @@
-# Project Base for Vaadin and Spring Boot
+# Deploying a Vaadin application to Heroku
 
 This simple project is used to verify how deplyment of Vaadin application works with Heroku. 
 Since spring-boot application is packaged by default as a jar, there are three different deployment possibilites:
