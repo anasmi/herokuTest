@@ -73,7 +73,7 @@ All three are possible with vaadin.
 ```
 
 - Create and configure Procfile in the root directory. Instructs Heroku which comments should be run on start-up
-- Create `heroku-settings.xml` to instract maven what profiles should be enabled by default(then need to add a `MAVEN_SETTINGS_PATH` variable with the file name to the Config var in Settings section on Heroku)
+- Create `heroku-settings.xml` to instract maven what profiles should be enabled by default(then need to add a `MAVEN_SETTINGS_PATH` variable with the file name to the Config var in Settings section on Heroku)![Configure settins in Heroku](images/config_vars.JPG)
 - Configure using two profiles (`production` and `npm` in this example) by default on application build in the `heroku-settings.xml`
 - Associate the Github repo with the Heroku application(Create a new application in Heroku UI and choose Github as a source)
 - It should work after that
