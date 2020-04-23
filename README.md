@@ -1,4 +1,4 @@
-# Project Base for Vaadin and Spring Boot
+# Deploying a Vaadin application to Heroku
 
 This simple project is used to verify how deplyment of Vaadin application works with Heroku. 
 Since spring-boot application is packaged by default as a jar, there are three different deployment possibilites:
@@ -9,32 +9,33 @@ Since spring-boot application is packaged by default as a jar, there are three d
 
 All three are possible with vaadin.
 
+### Prerequisites 
+- Java is installed and on Windows machine added to the PATH variable
+- Git is installed locally (Can check by running `git --version`)
+- A Heroku account is created
+
 ## Running a jar
 
-1. Create a Heroku account at https://www.heroku.com/home
+1. Install Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli)
 
-2. Check that git is installed and if not, install git
+2. Install Java CLI plugin (`heroku plugins:install java`)
 
-3. Install Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli)
+3. Change the server.port in application.properties settings to `server.port=${port:8080}` (https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-change-the-location-of-external-properties)
 
-4. Install Java CLI plugin (heroku plugins:install java)
+4. Generate a jar from your application using package -Pproduction
 
-5. Change the server.port in application.properties settings to `server.port=${port:8080}` (https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-change-the-location-of-external-properties)
-
-6. Generate a jar from your application using package -Pproduction
-
-7. Navigate to the folder, where generated jar is
+5. Navigate to the folder, where generated jar is
 
     <i>Next steps are following the section here: [Using the Heroku Java CLI Plugin](https://devcenter.heroku.com/articles/deploying-executable-jar-files#using-the-heroku-java-cli-plugin)</i>
 
-8. Create a Heroku application by either running
+6. Create a Heroku application by either running
       - `heroku create --no-remote` in the CLI`
       - Or in the UI under https://dashboard.heroku.com/apps “New”
       
-9. Write down the name of the application. You will need it in the next step
+7. Write down the name of the application. You will need it in the next step
  
-10. Deploy the jar using: heroku deploy:jar my-app.jar --app APP_NAME
-11. Run heroku open --app APP_NAME or check the URL of deployed app under Domains: https://dashboard.heroku.com/apps/APP_NAME/settings
+8. Deploy the jar using: heroku deploy:jar my-app.jar --app APP_NAME
+9. Run heroku open --app APP_NAME or check the URL of deployed app under Domains: https://dashboard.heroku.com/apps/APP_NAME/settings
 
 ## Running from Github
 
@@ -71,10 +72,10 @@ All three are possible with vaadin.
 
 ```
 
-- Configure Procfile in the root directory
-- Create `heroku-settings.xml` (then need to add a `MAVEN_SETTINGS_PATH` with the file name to the Config var in Settings section on Heroku)
-- configure using two profiles (`production` and `npm` in this example) by default on application build
-- Associate the Github repo with the Heroku application
+- Create and configure Procfile in the root directory. Instructs Heroku which comments should be run on start-up
+- Create `heroku-settings.xml` to instract maven what profiles should be enabled by default(then need to add a `MAVEN_SETTINGS_PATH` variable with the file name to the Config var in Settings section on Heroku)
+- Configure using two profiles (`production` and `npm` in this example) by default on application build in the `heroku-settings.xml`
+- Associate the Github repo with the Heroku application(Create a new application in Heroku UI and choose Github as a source)
 - It should work after that
 
 ## More Information
