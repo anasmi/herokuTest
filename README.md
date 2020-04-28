@@ -22,20 +22,20 @@ All three are possible with vaadin.
 
 3. Change the server.port in application.properties settings to `server.port=${port:8080}` (https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-change-the-location-of-external-properties)
 
-4. Generate a jar from your application using package -Pproduction
+4. Generate a jar from your application using `mvn package -Pproduction`
 
 5. Navigate to the folder, where generated jar is
 
     <i>Next steps are following the section here: [Using the Heroku Java CLI Plugin](https://devcenter.heroku.com/articles/deploying-executable-jar-files#using-the-heroku-java-cli-plugin)</i>
 
 6. Create a Heroku application by either running
-      - `heroku create --no-remote` in the CLI`
+      - `heroku create APP_NAME` in the CLI`
       - Or in the UI under https://dashboard.heroku.com/apps “New”
       
 7. Write down the name of the application. You will need it in the next step
  
-8. Deploy the jar using: heroku deploy:jar my-app.jar --app APP_NAME
-9. Run heroku open --app APP_NAME or check the URL of deployed app under Domains: https://dashboard.heroku.com/apps/APP_NAME/settings
+8. Deploy the jar using: `heroku deploy:jar my-app.jar --app APP_NAME`
+9. Run `heroku open --app APP_NAME` or check the URL of deployed app under Domains: https://dashboard.heroku.com/apps/APP_NAME/settings
 
 ## Running from Github
 
@@ -72,8 +72,8 @@ All three are possible with vaadin.
 
 ```
 
-- Create and configure Procfile in the root directory. Instructs Heroku which comments should be run on start-up
-- Create `heroku-settings.xml` to instract maven what profiles should be enabled by default(then need to add a `MAVEN_SETTINGS_PATH` variable with the file name to the Config var in Settings section on Heroku)![Configure settins in Heroku](images/config_vars.JPG)
+- Create and configure [Procfile](Procfile) in the root directory. Instructs Heroku which comments should be run on start-up
+- Create [`heroku-settings.xml`](heroku-settings.xml) to instract maven what profiles should be enabled by default(then need to add a `MAVEN_SETTINGS_PATH` variable with the file name to the Config var in Settings section on Heroku)![Configure settins in Heroku](images/config_vars.JPG)
 - Configure using two profiles (`production` and `npm` in this example) by default on application build in the `heroku-settings.xml`
 - Associate the Github repo with the Heroku application(Create a new application in Heroku UI and choose Github as a source)
 - It should work after that
