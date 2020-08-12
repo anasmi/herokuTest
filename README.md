@@ -92,7 +92,7 @@ Procfile content :
 web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
 ```
 
-Plugin : 
+[Maven dependency plugin](https://maven.apache.org/plugins/maven-dependency-plugin/) (_The dependency plugin provides the capability to manipulate artifacts. It can copy and/or unpack artifacts from local or remote repositories to a specified location_): 
 ```
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
