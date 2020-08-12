@@ -83,3 +83,39 @@ All three are possible with vaadin.
 - [Vaadin Flow](https://vaadin.com/flow) documentation
 - [Using Vaadin and Spring](https://vaadin.com/docs/v14/flow/spring/tutorial-spring-basic.html) article
 
+### Running non-spring application
+
+Example configurarion could be found from this pull request : [Add Heroku Configuration](https://github.com/vaadin/layout-examples/pull/28/files)
+
+Procfile content :
+```
+web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
+```
+
+Plugin : 
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>2.3</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals><goal>copy</goal></goals>
+            <configuration>
+                <artifactItems>
+                    <artifactItem>
+                        <groupId>com.heroku</groupId>
+                        <artifactId>webapp-runner</artifactId>
+                        <version>9.0.36.1</version>
+                        <destFileName>webapp-runner.jar</destFileName>
+                    </artifactItem>
+                </artifactItems>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Also, you should add maven config to the Heroku app itself in its panel. The variable is : 
+`MAVEN_CUSTOM_GOALS` : `clean package -Pproduction`
